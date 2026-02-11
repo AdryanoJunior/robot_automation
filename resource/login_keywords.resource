@@ -1,5 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
+Variables    ../variables/variables.py
 
 
 *** Keywords ***
@@ -8,18 +9,16 @@ I navigate to the login page
     Go To    ${URL}
 
 I input correct credentials
-    [Arguments]    ${USERNAME}    ${PASSWORD}
-    Wait Until Element Is Visible    name=username
+    Wait Until Element Is Visible    id=username
     Maximize Browser Window
-    Input Text    id=username    ${USERNAME} 
-    Input Password    id=password    ${PASSWORD} 
+    Input Text    id=username    ${LOGIN_DATA["correctData"]["username"]} 
+    Input Password    id=password    ${LOGIN_DATA["correctData"]["password"]} 
 
 I imput wrong credentials   
-    [Arguments]    ${WRONG_USERNAME}    ${WRONG_PASSWORD}
      Wait Until Element Is Visible    name=username
      Maximize Browser Window
-     Input Text    id=username    ${WRONG_USERNAME}
-     Input Password    id=password    ${WRONG_PASSWORD}
+     Input Text    id=username    ${LOGIN_DATA["wrongData"]["username"]}
+     Input Password    id=password    ${LOGIN_DATA["wrongData"]["password"]}
 
 I click on the login button
     Click Button    class=button
@@ -27,25 +26,33 @@ I click on the login button
 I am able view to the home page
     Wait Until Page Contains    Welcome admintest !
 
-I am able to see the expected error message
-    [Arguments]    ${ERROR_MESSAGE}=
-    Wait Until Element Contains    class=woocommerce-error    ${ERROR_MESSAGE}
-
 I input only the username
-    [Arguments]    ${USERNAME}=
     Wait Until Element Is Visible    name=username
-    Input Text    id=username    ${USERNAME} 
+    Input Text    id=username    ${LOGIN_DATA["correctData"]["username"]} 
 
 I input only the password
-    [Arguments]    ${PASSWORD}=
     Wait Until Element Is Visible    name=username
-    Input Password    id=password    ${PASSWORD} 
+    Input Password    id=password    ${LOGIN_DATA["correctData"]["password"]} 
 
 I input no credentials
     Wait Until Element Is Visible    name=username
 
-I input email with invalid formatting
-    [Arguments]    ${EMAIL_INVALID}=    ${PASSWORD}=    
+I input email with invalid formatting    
     Wait Until Element Is Visible    name=username
-    Input Text    id=username    ${EMAIL_INVALID}
-    Input Password    id=password    ${PASSWORD} 
+    Input Text    id=username    ${LOGIN_DATA["wrongData"]["username"]}
+    Input Password    id=password    ${LOGIN_DATA["wrongData"]["password"]} 
+
+I am able to see the expected error message for no credentials
+    Wait Until Element Contains    class=woocommerce-error    ${ERROR_MESSAGES["noCredentials"]}
+
+I am able to see the expected error message for no username
+    Wait Until Element Contains    class=woocommerce-error    ${ERROR_MESSAGES["noUsername"]}
+
+I am able to see the expected error message for no password
+    Wait Until Element Contains    class=woocommerce-error    ${ERROR_MESSAGES["noPassword"]}
+
+I am able to see the expected error message for wrong credentials
+    Wait Until Element Contains    class=woocommerce-error    ${ERROR_MESSAGES["wrongCredentials"]}
+
+I am able to see the expected error message for email invalid
+    Wait Until Element Contains    class=woocommerce-error    ${ERROR_MESSAGES["emailInvalid"]}

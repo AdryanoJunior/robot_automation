@@ -2,20 +2,18 @@
 Library    SeleniumLibrary
 Resource    ../resource/login_keywords.resource   
 Test Setup    Open Browser    browser=chrome
+Variables    ../variables/variables.py
 
 Documentation    Complete suite of login functionality
 
 *** Variables ***
 ${URL}    http://lojaebac.ebaconline.art.br/minha-conta/
-${BROWSER}    chrome   
-${USERNAME}    admintest@gmail.com
-${PASSWORD}    Test123$   
-
-
+  
+  
 *** Test Cases ***
 Successful Login
     I navigate to the login page    ${URL}
-    I input correct credentials    ${USERNAME}    ${PASSWORD}
+    I input correct credentials    
     I click on the login button
     I am able view to the home page
     
@@ -23,28 +21,28 @@ Insuccessful Login - No Credentials
     I navigate to the login page    ${URL}
     I input no credentials
     I click on the login button
-    I am able to see the expected error message    Erro: Nome de usuário é obrigatório.
+    I am able to see the expected error message for no credentials   
 
 Insuccessful Login - No Username
     I navigate to the login page    ${URL}
-    I input only the password    ${PASSWORD}
+    I input only the password     
     I click on the login button
-    I am able to see the expected error message     Erro: Nome de usuário é obrigatório.
+    I am able to see the expected error message for no username    
 
 Insuccessful Login - No Password
     I navigate to the login page    ${URL} 
-    I input only the username    ${USERNAME}
+    I input only the username    
     I click on the login button
-    I am able to see the expected error message     Erro: O campo da senha está vazio.
+    I am able to see the expected error message for no password
 
 Insuccessful Login - Wrong Credentials
      I navigate to the login page    ${URL}
-     I imput wrong credentials    testqa@gmail.com    testuser
+     I imput wrong credentials    
      I click on the login button 
-     I am able to see the expected error message     Endereço de e-mail desconhecido. Verifique novamente ou tente seu nome de usuário.
+     I am able to see the expected error message for wrong credentials 
 
 Insuccessful Login - Email with invalid formatting
     I navigate to the login page    ${URL} 
-    I input email with invalid formatting    testuser123    ${PASSWORD}    
+    I input email with invalid formatting      
     I click on the login button
-    I am able to see the expected error message     Erro: O usuário testuser123 não está registrado neste site. Se você não está certo de seu nome de usuário, experimente o endereço de e-mail.
+    I am able to see the expected error message for email invalid   

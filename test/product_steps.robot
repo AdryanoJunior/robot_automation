@@ -1,6 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
-Resource    ../resource/product_steps.robot
+Resource    ../resource/product_keywords.robot
 Test Setup    Open Browser    browser=chrome
 
 Documentation    Complete suite of product functionalities

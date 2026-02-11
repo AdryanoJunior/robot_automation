@@ -21,6 +21,7 @@ I select a product and choose the size and color
     Click Element    css=[title=Red]
 
 I click the add to cart button
+    Wait Until Element Is Visible    class=single_add_to_cart_button
     Click Button    class=single_add_to_cart_button
 
 Success message product added
@@ -53,6 +54,8 @@ I fill in the purchase details
     Input Text    id=billing_email    testqa@gmail.com
     Wait Until Element Is Visible    id=payment_method_cod    
     Click Element    id=payment_method_cod
+    Sleep    1s
+    Wait Until Element Is Visible     id=terms    
     Click Element    id=terms
 
 I click the complete purchase button
